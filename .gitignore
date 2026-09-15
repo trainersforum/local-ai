@@ -1,0 +1,10 @@
+# Probe run artefacts (raw logs are committed deliberately, see probes/results/)
+probes/mcp-prototype/probe-requests.log
+probes/mcp-prototype/.probe-token
+__pycache__/
+*.pyc
+.pocketkit/
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini

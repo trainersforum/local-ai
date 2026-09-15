@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8" /><title>quant-calculator</title></head>
+  <body>
+    <script>
+      // Google AI Edge Gallery JS skill contract:
+      //   window['ai_edge_gallery_get_result'] = async (data, secret) => "<stringified JSON>"
+      // `data` is documented as a stringified JSON object of the LLM-provided parameters, but we
+      // accept an object too and report which form actually arrived (probe V1 / argument
+      // marshalling). Returns { result } on success or { error } on failure.
+      //
+      // Self-contained by design: no remote scripts, no fetch, no network.
+
+      const BITS_PER_BYTE = 8;
+      const GB = 1024 * 1024 * 1024;
+
+      // Runtime needs more than the weights: KV cache, activations, tokeniser, framework overhead.
+      // 1.25x is a deliberately rough rule of thumb for a phone-sized context window.
+      const RUNTIME_OVERHEAD = 1.25;
+
+      function estimate(paramsB, bpw) {
+        const weightsBytes = (paramsB * 1e9 * bpw) / BITS_PER_BYTE;
+        const weightsGB = weightsBytes / GB;
+        return {
+          weights_gb: Number(weightsGB.toFixed(2)),
+          estimated_runtime_gb: Number((weightsGB * RUNTIME_OVERHEAD).toFixed(2)),
+        };
+      }
+
+      function verdict(runtimeGB) {
+        if (runtimeGB <= 1.5) return "Comfortable on almost any modern phone.";
+        if (runtimeGB <= 3.5) return "Should fit a 6 GB phone; close other apps first.";
+        if (runtimeGB <= 6.0) return "Needs 8 GB or more of RAM. Expect pressure on a 6 GB phone.";
+        return "Too large for a phone. This is laptop or desktop territory.";
+      }
+
+      window["ai_edge_gallery_get_result"] = async (data, secret) => {
+        // Probe diagnostics: record how Gallery actually passed the arguments.
+        const received = {
+          typeof_data: typeof data,
+          secret_present: typeof secret !== "undefined",
+          raw: typeof data === "string" ? data : JSON.stringify(data),
+        };
+
+        try {
+          const d = typeof data === "string" ? JSON.parse(data) : data;
+          if (d === null || typeof d !== "object") {
+            return JSON.stringify({ error: "Expected a JSON object of parameters.", received });
+          }
+
+          const paramsB = Number(d.params_b);
+          const bpw = Number(d.bpw);
+
+          if (!Number.isFinite(paramsB) || paramsB <= 0) {
+            return JSON.stringify({
+              error: "params_b must be a positive number of billions of parameters.",
+              received,
+            });
+          }
+          if (!Number.isFinite(bpw) || bpw <= 0 || bpw > 32) {
+            return JSON.stringify({
+              error: "bpw must be a positive bits-per-weight value between 0 and 32.",
+              received,
+            });
+          }
+
+          const e = estimate(paramsB, bpw);
+          const summary =
+            "≈ " + e.weights_gb.toFixed(2) + " GB of weights on disk; " +
+            "≈ " + e.estimated_runtime_gb.toFixed(2) + " GB in memory at runtime. " +
+            verdict(e.estimated_runtime_gb);
+
+          return JSON.stringify({
+            result: summary,
+            params_b: paramsB,
+            bpw: bpw,
+            weights_gb: e.weights_gb,
+            estimated_runtime_gb: e.estimated_runtime_gb,
+            _probe: received,
+          });
+        } catch (err) {
+          return JSON.stringify({ error: String(err), received });
+        }
+      };
+    </script>
+  </body>
+</html>

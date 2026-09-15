@@ -1,0 +1,9 @@
+# Scripts in this repo run on Android (Termux) and iOS (a-Shell).
+# CRLF line endings break shebangs there ("bad interpreter"), so normalise to LF
+# everywhere, including on Windows checkouts.
+* text=auto eol=lf
+*.sh  text eol=lf
+*.py  text eol=lf
+*.md  text eol=lf
+*.html text eol=lf
+*.json text eol=lf
