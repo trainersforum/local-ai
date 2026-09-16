@@ -123,7 +123,10 @@ Gallery cannot load JS skills from `raw.githubusercontent.com` — GitHub serves
 `text/plain`, which will not execute. They must come from real hosting, which is why this repo
 publishes to GitHub Pages.
 
-**A1. Confirm the skills are being served.** In the phone's browser, open:
+**A1. Confirm the skills are being served.** Already verified from a desktop on 2026-09-16 —
+Pages returns `text/markdown` for `SKILL.md` and `text/html` for `index.html`, so **V24 is
+resolved** and the hosting is valid. Confirm it also loads on the phone. In the phone's browser,
+open:
 
 - <https://trainersforum.github.io/local-ai/skills/quant-calculator/SKILL.md>
 - <https://trainersforum.github.io/local-ai/skills/quant-calculator/scripts/index.html>

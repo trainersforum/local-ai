@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Local AI — Pocket Node</title>
+    <meta
+      name="description"
+      content="Run a private AI agent on the phone you already own. Currently in validation."
+    />
+    <style>
+      :root {
+        --bg: #fbfaf8;
+        --fg: #1a1a18;
+        --muted: #5f5d57;
+        --line: #e2ded6;
+        --card: #ffffff;
+        --accent: #8a5a2b;
+        --warn-bg: #fdf6e8;
+        --warn-line: #e6c88a;
+        --code-bg: #f2efe9;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #16150f;
+          --fg: #ece9e2;
+          --muted: #a19d94;
+          --line: #302d26;
+          --card: #1e1c16;
+          --accent: #d9a05b;
+          --warn-bg: #241e12;
+          --warn-line: #5c4a28;
+          --code-bg: #24211a;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #16150f;
+        --fg: #ece9e2;
+        --muted: #a19d94;
+        --line: #302d26;
+        --card: #1e1c16;
+        --accent: #d9a05b;
+        --warn-bg: #241e12;
+        --warn-line: #5c4a28;
+        --code-bg: #24211a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0 16px 64px;
+        background: var(--bg);
+        color: var(--fg);
+        font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        -webkit-text-size-adjust: 100%;
+      }
+      main {
+        max-width: 42rem;
+        margin: 0 auto;
+      }
+      header {
+        padding: 48px 0 8px;
+      }
+      h1 {
+        font-size: clamp(1.9rem, 7vw, 2.6rem);
+        line-height: 1.15;
+        margin: 0 0 12px;
+        letter-spacing: -0.02em;
+      }
+      .lede {
+        font-size: 1.1rem;
+        color: var(--muted);
+        margin: 0 0 8px;
+      }
+      h2 {
+        font-size: 1.15rem;
+        margin: 40px 0 12px;
+        letter-spacing: -0.01em;
+      }
+      a {
+        color: var(--accent);
+      }
+      .status {
+        background: var(--warn-bg);
+        border: 1px solid var(--warn-line);
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin: 28px 0;
+      }
+      .status strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+      .status p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      ul.links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      ul.links li {
+        border-top: 1px solid var(--line);
+        padding: 14px 0;
+      }
+      ul.links li:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      ul.links a {
+        font-weight: 600;
+        text-decoration: none;
+      }
+      ul.links a:hover {
+        text-decoration: underline;
+      }
+      ul.links span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.92rem;
+        margin-top: 2px;
+      }
+      code {
+        background: var(--code-bg);
+        border-radius: 5px;
+        padding: 2px 6px;
+        font: 0.85em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        word-break: break-all;
+      }
+      .skill {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+      }
+      .skill b {
+        font-size: 0.95rem;
+      }
+      .skill code {
+        display: block;
+        margin-top: 8px;
+        padding: 8px 10px;
+        background: var(--code-bg);
+      }
+      footer {
+        margin-top: 56px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Local AI — Pocket Node</h1>
+        <p class="lede">
+          Run a private AI agent on the phone you already own. Not a chatbot: an agent that reads,
+          writes and surgically edits files in your own notes vault, entirely on-device, and keeps
+          working in airplane mode.
+        </p>
+      </header>
+
+      <div class="status">
+        <strong>Status: M0 — validation spike</strong>
+        <p>
+          Not ready to follow yet. Nothing here is a setup guide. This stage exists to test the
+          handful of assumptions the design rests on, on a real phone, before any of it gets built.
+          The toolkit, the vault template and the session materials come next — and deliberately
+          not before the probes come back.
+        </p>
+      </div>
+
+      <h2>Start here</h2>
+      <ul class="links">
+        <li>
+          <a href="https://github.com/trainersforum/local-ai">Repository</a>
+          <span>Source, probes and the full design specification.</span>
+        </li>
+        <li>
+          <a href="https://github.com/trainersforum/local-ai/blob/main/probes/README.md">
+            Probe protocol
+          </a>
+          <span>Phone setup, then the five probes, then how to record what happened.</span>
+        </li>
+        <li>
+          <a href="https://github.com/trainersforum/local-ai/blob/main/VALIDATION.md">
+            Validation register
+          </a>
+          <span>Every open assumption, its status, and the evidence that settled it.</span>
+        </li>
+        <li>
+          <a
+            href="https://github.com/trainersforum/local-ai/blob/main/spec/Local_AI_Workshop_Phase1_Pocket_Node_Design_Spec.md"
+          >
+            Design specification
+          </a>
+          <span>The whole Phase 1 design, in full.</span>
+        </li>
+      </ul>
+
+      <h2>Probe skills</h2>
+      <p class="lede" style="font-size: 0.95rem">
+        In Google AI Edge Gallery: <b>Agent Skills › Skills › + › Add from URL</b>. The URL points
+        at the skill <em>folder</em>, trailing slash included.
+      </p>
+
+      <div class="skill">
+        <b>quant-calculator</b> — estimates how much space a model needs, and runs JavaScript
+        on-device to do it.
+        <code>https://trainersforum.github.io/local-ai/skills/quant-calculator/</code>
+      </div>
+
+      <div class="skill">
+        <b>vault-guide-probe</b> — explains the vault layout. Text only, no code: it is the control
+        that tells a JavaScript failure apart from a skill-loading failure.
+        <code>https://trainersforum.github.io/local-ai/skills/vault-guide-probe/</code>
+      </div>
+
+      <footer>
+        Apache 2.0 · built for a hands-on session, and for anyone who wants to run the same thing
+        on their own.
+      </footer>
+    </main>
+  </body>
+</html>

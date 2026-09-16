@@ -20,7 +20,7 @@ during M0 and are not in the original spec.
 
 ## Current state — 2026-09-16
 
-**Resolved: 5 · At risk: 1 · Pending test (Android): 11 · Pending device (iPhone): 9**
+**Resolved: 6 · At risk: 1 · Pending test (Android): 10 · Pending device (iPhone): 9**
 
 M0 acceptance (spec §9.1) needs **V1, V2, V4, V10, V13** resolved on Android. Two are done
 (V10, V13); three need the phone (V1, V2, V4). **V2 is the one that can change the architecture.**
@@ -54,7 +54,7 @@ M0 acceptance (spec §9.1) needs **V1, V2, V4, V10, V13** resolved on Android. T
 | **V21** | Locally AI Shortcuts action parameters; Gemma 4 on a 6 GB iPhone (follow-up L4) | `PENDING-DEVICE` | — | Drop the L4 follow-up. |
 | **V22** | llama.cpp availability/performance in Termux with a small GGUF (follow-up messaging) | `PENDING-TEST` | Gallery imports `.litertlm` **only**, not GGUF — so GGUF models belong here, not in the session. `unsloth/Qwen3-VL-2B-Instruct-GGUF` is a candidate for this bridge. | Limit the bridge to Qwen-class GGUF, or defer to Phase 2. |
 | **V23** *(new)* | Which MCP protocol revision does Gallery actually request? | `PENDING-TEST` | MCP added a `2026-07-28` revision that removed the GET stream endpoint and protocol-level sessions. Spec §7.4 lists only `2025-03-26`, `2025-06-18`, `2025-11-25`. | `probe_serve.py` speaks all four and **logs what Gallery asks for**, which decides what M3 is built against. Stateless + no GET already matches the 2026 shape. |
-| **V24** *(new)* | GitHub Pages serves `SKILL.md` and `scripts/index.html` with usable Content-Types | `PENDING-TEST` | Gallery docs: GitHub raw URLs serve `text/plain`, which "lacks the proper MIME types required for execution" — real hosting is required. | If Pages is also unusable, skills need different hosting. Blocks V1, so it is checked first. |
+| **V24** *(new)* | GitHub Pages serves `SKILL.md` and `scripts/index.html` with usable Content-Types | `RESOLVED-TRUE` | 2026-09-16, live site: `SKILL.md` → `text/markdown; charset=utf-8`, `scripts/index.html` → `text/html; charset=utf-8`, both HTTP 200. Contrast with `raw.githubusercontent.com`, which serves `text/plain` and will not execute. | Pages is valid hosting for skills. Unblocks V1. Note `.nojekyll` is required (it stops Jekyll converting `SKILL.md` into `SKILL.html`) and therefore the site root needs an explicit `index.html`. |
 
 ---
 
